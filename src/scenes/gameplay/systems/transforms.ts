@@ -1,15 +1,21 @@
 import { World } from "miniplex";
 import { Object3D } from "three";
+import { System } from "../ecs";
 
-export default (world: World, root: Object3D) => {
+export default (world: World, root: Object3D): System => {
   const withTransform = world.with("transform");
 
-  withTransform.onEntityAdded.add((entity) => {
-    console.log("hello", entity, root);
-    root.add(entity.transform);
-  });
+  const cleanups = [
+    withTransform.onEntityAdded.add((entity) => {
+      console.log(entity);
+      root.add(entity.transform);
+    }),
+  ];
 
-  return () => {
-    console.log("transform system");
+  return {
+    cleanup() {
+      withTransform.onEntityAdded.clear();
+      cleanups.forEach((cleanup) => cleanup());
+    },
   };
 };

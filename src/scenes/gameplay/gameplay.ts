@@ -1,6 +1,7 @@
 import { World } from "miniplex";
 import {
   IcosahedronGeometry,
+  MathUtils,
   Mesh,
   MeshBasicMaterial,
   MeshStandardMaterial,
@@ -10,8 +11,10 @@ import { Entity } from "./ecs";
 import transforms from "./systems/transforms";
 
 export function start(world: World<Entity>, root: Object3D) {
-  console.log("Setting up world", root);
+  /* Set up systems */
+  const systems = [transforms(world, root)];
 
+  /* Set up world */
   world.add({
     transform: new Mesh(
       new IcosahedronGeometry(),
@@ -19,17 +22,22 @@ export function start(world: World<Entity>, root: Object3D) {
     ),
   });
 
-  const systems = [transforms(world, root)];
-
   /* Ticker */
   let raf = 0;
+  let time = performance.now();
   function animate() {
     raf = requestAnimationFrame(animate);
-    systems.forEach((system) => system());
+
+    const now = performance.now();
+    const dt = MathUtils.clamp((now - time) / 1000, 0, 0.2);
+    time = now;
+
+    systems.forEach((system) => system.update?.(dt));
   }
   animate();
 
   return () => {
     cancelAnimationFrame(raf);
+    systems.forEach((system) => system.cleanup?.());
   };
 }
