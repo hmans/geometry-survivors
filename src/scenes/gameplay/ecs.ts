@@ -1,16 +1,16 @@
-import { World } from "miniplex";
-import * as THREE from "three";
-import { AutoRotate, IAutoRotateEntity } from "./plugins/autorotate";
+import { World } from "miniplex"
+import * as THREE from "three"
+import { AutoRotate, IAutoRotateEntity } from "./plugins/autorotate"
 
 export type System = {
-  update?: (dt: number) => void;
-  cleanup?: () => void;
-};
+  update?: (dt: number) => void
+  cleanup?: () => void
+}
 
 export type BaseEntity = {
-  transform?: THREE.Object3D;
-};
+  transform?: THREE.Object3D
+}
 
-export type Entity = BaseEntity & IAutoRotateEntity;
+export type Entity = BaseEntity & Partial<IAutoRotateEntity>
 
-export const world = new World<Entity>();
+export const world = new World<Entity>()
