@@ -1,9 +1,10 @@
 import { World } from "miniplex";
 import {
+  AmbientLight,
+  DirectionalLight,
   IcosahedronGeometry,
   MathUtils,
   Mesh,
-  MeshBasicMaterial,
   MeshStandardMaterial,
   Object3D,
 } from "three";
@@ -15,10 +16,16 @@ export function start(world: World<Entity>, root: Object3D) {
   const systems = [transforms(world, root)];
 
   /* Set up world */
+  world
+    .add({ transform: new DirectionalLight("white", 1.2) })
+    .transform.position.set(10, 20, 30);
+
+  world.add({ transform: new AmbientLight("purple", 0.2) });
+
   world.add({
     transform: new Mesh(
       new IcosahedronGeometry(),
-      new MeshBasicMaterial({ color: "hotpink" })
+      new MeshStandardMaterial({ color: "hotpink" })
     ),
   });
 
@@ -38,6 +45,7 @@ export function start(world: World<Entity>, root: Object3D) {
 
   return () => {
     cancelAnimationFrame(raf);
+    world.clear();
     systems.forEach((system) => system.cleanup?.());
   };
 }

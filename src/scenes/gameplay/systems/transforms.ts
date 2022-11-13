@@ -7,8 +7,11 @@ export default (world: World, root: Object3D): System => {
 
   const cleanups = [
     withTransform.onEntityAdded.add((entity) => {
-      console.log(entity);
       root.add(entity.transform);
+    }),
+
+    withTransform.onEntityRemoved.add((entity) => {
+      entity.transform.parent.remove(entity.transform);
     }),
   ];
 
