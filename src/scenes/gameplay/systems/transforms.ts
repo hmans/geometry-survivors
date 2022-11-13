@@ -17,7 +17,6 @@ export default (world: World, root: Object3D): System => {
 
   return {
     cleanup() {
-      withTransform.onEntityAdded.clear();
       cleanups.forEach((cleanup) => cleanup());
     },
   };
