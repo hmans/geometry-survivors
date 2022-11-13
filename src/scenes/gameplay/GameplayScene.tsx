@@ -1,15 +1,14 @@
-import { Environment } from "@react-three/drei";
-import { Suspense } from "react";
+import { useLayoutEffect, useRef } from "react";
+import { Group } from "three";
+import { world } from "./ecs";
+import * as gameplay from "./gameplay";
 
 export default function GameplayScene() {
-  return (
-    <Suspense>
-      <Environment preset="sunset" />
+  const group = useRef<Group>(null!);
 
-      <mesh>
-        <icosahedronGeometry />
-        <meshStandardMaterial color="hotpink" />
-      </mesh>
-    </Suspense>
-  );
+  useLayoutEffect(() => {
+    return gameplay.start(world, group.current);
+  }, []);
+
+  return <group ref={group} />;
 }
