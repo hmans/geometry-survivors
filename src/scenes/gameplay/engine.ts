@@ -1,15 +1,16 @@
 import { World } from "miniplex";
 import { MathUtils, Object3D } from "three";
-import { Entity } from "./ecs";
+import { BaseEntity, Entity } from "./ecs";
+import { autorotateSystem } from "./plugins/autorotate";
 import transforms from "./systems/transforms";
 
-export function start(
-  world: World<Entity>,
+export function start<E extends Entity>(
+  world: World<E>,
   root: Object3D,
-  setup: (world: World<Entity>) => void
+  setup: (world: World<E>) => void
 ) {
   /* Set up systems */
-  const systems = [transforms(world, root)];
+  const systems = [transforms(world, root), autorotateSystem(world)];
 
   /* Set up world */
   setup(world);

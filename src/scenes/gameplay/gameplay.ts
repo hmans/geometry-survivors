@@ -7,6 +7,7 @@ import {
   MeshStandardMaterial,
 } from "three";
 import { Entity } from "./ecs";
+import { AutoRotate } from "./plugins/autorotate";
 
 export function start(world: World<Entity>) {
   world
@@ -15,10 +16,12 @@ export function start(world: World<Entity>) {
 
   world.add({ transform: new AmbientLight("purple", 0.2) });
 
-  world.add({
+  const mesh = world.add({
     transform: new Mesh(
       new IcosahedronGeometry(),
       new MeshStandardMaterial({ color: "hotpink" })
     ),
   });
+
+  world.addComponent(mesh, AutoRotate, { speed: 0.5 });
 }
