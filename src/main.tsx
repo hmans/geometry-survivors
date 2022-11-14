@@ -28,6 +28,7 @@ engine.start<Entity>(({ world, addSystem }) => {
   {
     world.add({ transform: new AmbientLight("purple", 0.2) })
   }
+
   {
     const entity = world.add({
       transform: new Mesh(
