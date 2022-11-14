@@ -6,7 +6,6 @@ import {
   MeshStandardMaterial
 } from "three"
 import "./index.css"
-
 import * as engine from "./minigame/engine"
 import { AutoRotate, IAutoRotateEntity } from "./plugins/autorotate"
 
