@@ -10,9 +10,3 @@ body {
 body {
   background-color: #000;
 }
-
-div#root {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}

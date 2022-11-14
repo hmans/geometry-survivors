@@ -1,12 +1,25 @@
-import { Loader } from "@react-three/drei";
-import React from "react";
-import ReactDOM from "react-dom/client";
-import Game from "./Game";
-import "./index.css";
+import {
+  AmbientLight,
+  DirectionalLight,
+  IcosahedronGeometry,
+  Mesh,
+  MeshStandardMaterial
+} from "three"
+import "./index.css"
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <Loader />
-    <Game />
-  </React.StrictMode>
-);
+import * as engine from "./minigame/engine"
+
+engine.start((world) => {
+  const light = world.add({ transform: new DirectionalLight("white", 1.2) })
+
+  light.transform.position.set(10, 20, 30)
+
+  world.add({ transform: new AmbientLight("purple", 0.2) })
+
+  const mesh = world.add({
+    transform: new Mesh(
+      new IcosahedronGeometry(),
+      new MeshStandardMaterial({ color: "hotpink" })
+    )
+  })
+})
