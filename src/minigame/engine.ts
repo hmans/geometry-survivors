@@ -11,7 +11,9 @@ export type System = {
   update?(delta: number): void
 }
 
-export function start<E extends BaseEntity>(setup: (world: World<E>) => void) {
+type SetupFunction<E extends BaseEntity> = (args: { world: World<E> }) => void
+
+export function start<E extends BaseEntity>(setup: SetupFunction<E>) {
   /* Set up world */
   const world = new World<E>()
 
@@ -35,7 +37,7 @@ export function start<E extends BaseEntity>(setup: (world: World<E>) => void) {
   const systems = [transforms(world, scene)]
 
   /* Set up world */
-  setup(world)
+  setup({ world })
 
   /* Ticker */
   let raf = 0
