@@ -8,8 +8,11 @@ import {
 import "./index.css"
 
 import * as engine from "./minigame/engine"
+import { AutoRotate, IAutoRotateEntity } from "./plugins/autorotate"
 
-engine.start((world) => {
+type Entity = engine.BaseEntity & Partial<IAutoRotateEntity>
+
+engine.start<Entity>((world) => {
   const light = world.add({ transform: new DirectionalLight("white", 1.2) })
 
   light.transform.position.set(10, 20, 30)
@@ -22,4 +25,6 @@ engine.start((world) => {
       new MeshStandardMaterial({ color: "hotpink" })
     )
   })
+
+  world.addComponent(mesh, AutoRotate, { speed: 0.01 })
 })
