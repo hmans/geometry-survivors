@@ -11,7 +11,10 @@ export type System = {
   update?(delta: number): void
 }
 
-type SetupFunction<E extends BaseEntity> = (args: { world: World<E> }) => void
+type SetupFunction<E extends BaseEntity> = (args: {
+  world: World<E>
+  addSystem: (system: System) => void
+}) => void
 
 export function start<E extends BaseEntity>(setup: SetupFunction<E>) {
   /* Set up world */
@@ -34,10 +37,10 @@ export function start<E extends BaseEntity>(setup: SetupFunction<E>) {
   camera.position.z = 20
 
   /* Set up systems */
-  const systems = [transforms(world, scene)]
+  const systems: System[] = [transforms(world, scene)]
 
   /* Set up world */
-  setup({ world })
+  setup({ world, addSystem: (system: System) => systems.push(system) })
 
   /* Ticker */
   let raf = 0
