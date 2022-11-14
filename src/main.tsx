@@ -1,6 +1,7 @@
 import {
   AmbientLight,
   DirectionalLight,
+  DodecahedronGeometry,
   IcosahedronGeometry,
   Mesh,
   MeshStandardMaterial
@@ -18,12 +19,25 @@ engine.start<Entity>((world) => {
 
   world.add({ transform: new AmbientLight("purple", 0.2) })
 
-  const mesh = world.add({
-    transform: new Mesh(
-      new IcosahedronGeometry(),
-      new MeshStandardMaterial({ color: "hotpink" })
-    )
-  })
+  {
+    const entity = world.add({
+      transform: new Mesh(
+        new DodecahedronGeometry(),
+        new MeshStandardMaterial({ color: "orange" })
+      )
+    })
 
-  world.addComponent(mesh, AutoRotate, { speed: 0.01 })
+    entity.transform.position.set(-3, 0, 0)
+  }
+
+  {
+    const mesh = world.add({
+      transform: new Mesh(
+        new IcosahedronGeometry(),
+        new MeshStandardMaterial({ color: "hotpink" })
+      )
+    })
+
+    world.addComponent(mesh, AutoRotate, { speed: 0.01 })
+  }
 })
