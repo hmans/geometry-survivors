@@ -1,5 +1,5 @@
 import { World } from "miniplex"
-import { BaseEntity, System } from "../../scenes/gameplay/ecs"
+import { BaseEntity, System } from "../minigame/engine"
 
 export const AutoRotate = "co.hmans.autorote"
 
