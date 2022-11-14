@@ -13,12 +13,14 @@ import { AutoRotate, IAutoRotateEntity } from "./plugins/autorotate"
 type Entity = engine.BaseEntity & Partial<IAutoRotateEntity>
 
 engine.start<Entity>((world) => {
-  const light = world.add({ transform: new DirectionalLight("white", 1.2) })
+  {
+    const light = world.add({ transform: new DirectionalLight("white", 1.2) })
+    light.transform.position.set(10, 20, 30)
+  }
 
-  light.transform.position.set(10, 20, 30)
-
-  world.add({ transform: new AmbientLight("purple", 0.2) })
-
+  {
+    world.add({ transform: new AmbientLight("purple", 0.2) })
+  }
   {
     const entity = world.add({
       transform: new Mesh(
